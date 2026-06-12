@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\RemoteStorage\Driver\DriverFactoryPool">
+        <arguments>
+            <argument name="pool" xsi:type="array">
+                <item name="cloudflare-r2" xsi:type="object">TH\R2\Driver\R2Factory</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="thR2TestConnection" xsi:type="object">TH\R2\Console\Command\TestConnectionCommand</item>
+                <item name="thR2MediaSync" xsi:type="object">TH\R2\Console\Command\MediaSyncCommand</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

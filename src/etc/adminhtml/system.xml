@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="th" translate="label" sortOrder="500">
+            <label>TH</label>
+        </tab>
+        <section id="th_r2" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+            <label>Cloudflare R2</label>
+            <tab>th</tab>
+            <resource>Magento_Config::config</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>General</label>
+                <field id="enabled" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable R2 Configuration</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Enables TH_R2 configuration values for command-line tests and fallback driver configuration.</comment>
+                </field>
+                <field id="driver_code" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Remote Storage Driver Code</label>
+                    <comment>Use this value as remote_storage/driver in deployment configuration.</comment>
+                </field>
+            </group>
+            <group id="connection" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>R2 Connection</label>
+                <field id="account_id" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Account ID</label>
+                    <comment>Cloudflare account ID. Used to build the endpoint when Endpoint is empty.</comment>
+                </field>
+                <field id="endpoint" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Endpoint</label>
+                    <comment>Leave empty to use https://&lt;account_id&gt;.r2.cloudflarestorage.com.</comment>
+                </field>
+                <field id="bucket" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Bucket</label>
+                </field>
+                <field id="region" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Region</label>
+                    <comment>Cloudflare R2 uses auto.</comment>
+                </field>
+                <field id="access_key_id" translate="label" type="obscure" sortOrder="50" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Access Key ID</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+                <field id="secret_access_key" translate="label" type="obscure" sortOrder="60" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Secret Access Key</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+                <field id="prefix" translate="label comment" type="text" sortOrder="70" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Prefix</label>
+                    <comment>Optional object key prefix. Leave empty to store media at bucket root.</comment>
+                </field>
+                <field id="public_base_url" translate="label comment" type="text" sortOrder="80" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Public Base URL</label>
+                    <comment>Optional Cloudflare R2 custom domain for public media URLs.</comment>
+                </field>
+                <field id="path_style" translate="label comment" type="select" sortOrder="90" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Use Path-Style Endpoint</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Enable only if compatibility testing requires it.</comment>
+                </field>
+                <field id="timeout" translate="label comment" type="text" sortOrder="100" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Timeout</label>
+                    <comment>Optional AWS SDK request timeout in seconds. Use 0 for SDK default.</comment>
+                </field>
+                <field id="retries" translate="label comment" type="text" sortOrder="110" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Retries</label>
+                    <comment>Optional AWS SDK retry count.</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

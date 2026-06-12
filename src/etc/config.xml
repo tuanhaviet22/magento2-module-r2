@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <th_r2>
+            <general>
+                <enabled>0</enabled>
+                <driver_code>cloudflare-r2</driver_code>
+            </general>
+            <connection>
+                <endpoint></endpoint>
+                <region>auto</region>
+                <prefix></prefix>
+                <public_base_url></public_base_url>
+                <path_style>0</path_style>
+                <timeout>0</timeout>
+                <retries>3</retries>
+            </connection>
+        </th_r2>
+    </default>
+</config>

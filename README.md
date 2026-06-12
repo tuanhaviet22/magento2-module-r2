@@ -84,7 +84,7 @@ These features are intentionally not part of the first implementation:
 - R2 bucket creation from Magento.
 - Advanced admin dashboard or usage analytics.
 
-## Proposed Package Structure
+## Package Structure
 
 ```text
 TH_R2/
@@ -108,6 +108,25 @@ TH_R2/
     +-- Model/
         +-- Config.php
 ```
+
+## Installation
+
+Require the package in Magento:
+
+```bash
+composer require th/module-r2
+```
+
+Enable the module:
+
+```bash
+bin/magento module:enable TH_R2
+bin/magento setup:upgrade
+bin/magento cache:flush
+```
+
+For production mode, run dependency injection compilation and static content
+deployment as required by the project deployment process.
 
 ## Architecture Direction
 
@@ -159,6 +178,37 @@ Recommended defaults:
 Secrets must not be hardcoded. Access key ID and secret access key should be
 stored through Magento encrypted configuration or deployment configuration.
 
+Admin configuration is available at:
+
+```text
+Stores > Configuration > TH > Cloudflare R2
+```
+
+The admin configuration is used by `bin/magento th:r2:test-connection` and as a
+fallback for the `cloudflare-r2` driver factory. For real Magento media upload
+through the remote storage filesystem, configure Magento deployment config with
+the `cloudflare-r2` driver:
+
+```php
+'remote_storage' => [
+    'driver' => 'cloudflare-r2',
+    'prefix' => '',
+    'config' => [
+        'account_id' => '<cloudflare_account_id>',
+        'endpoint' => 'https://<cloudflare_account_id>.r2.cloudflarestorage.com',
+        'bucket' => '<bucket>',
+        'region' => 'auto',
+        'credentials' => [
+            'key' => '<access_key_id>',
+            'secret' => '<secret_access_key>',
+        ],
+        'path-style' => '0',
+    ],
+],
+```
+
+If `endpoint` is omitted, `TH_R2` can build it from `account_id`.
+
 ## Public Media URL
 
 For production storefront media URLs, use a Cloudflare R2 custom domain.
@@ -202,13 +252,8 @@ Expected behavior:
 - Print failed file paths with error messages.
 - Support a dry-run mode before uploading.
 
-Planned options:
-
-```bash
-bin/magento th:r2:media:sync --dry-run
-bin/magento th:r2:media:sync --path catalog/product
-bin/magento th:r2:media:sync --force
-```
+The current command wraps Magento's remote storage synchronizer. Dry-run, path
+filtering, and force upload options are planned for a later phase.
 
 ## Migration Flow
 
@@ -249,11 +294,11 @@ version before publishing a strict compatibility matrix.
 
 ### Phase 2: MVP Driver
 
-- Scaffold module under `src/`.
-- Add `composer.json` and `CHANGELOG.md` at the package root.
-- Register the `cloudflare-r2` remote storage driver.
-- Implement R2 client factory/config model.
-- Implement connection test command.
+- Scaffold module under `src/`. Done.
+- Add `composer.json` and `CHANGELOG.md` at the package root. Done.
+- Register the `cloudflare-r2` remote storage driver. Done.
+- Implement R2 client factory/config model. Done.
+- Implement connection test command. Done.
 - Validate product image upload and retrieval.
 
 ### Phase 3: Media Migration
